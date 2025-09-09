@@ -1,0 +1,29 @@
+### 개발 환경 설정 ###
+
+
+spring:
+  # 인 메모리 DB 연결 정보 설정
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+  # 데이터베이스 SQL 초기화 설정
+  sql:
+    init:
+      encoding: UTF-8
+      # 초기화 모드
+      mode: EMBEDDED  # 내장 데이터베이스 사용시 스크립트 실행
+      schema-locations:
+        - classpath:sql/schema.sql
+      data-locations:
+        - classpath:sql/data.sql
+  # H2 콘솔 접속 설정
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+      
+
+## 서버 포트 설정
+server:
+  port: 80

@@ -1,0 +1,46 @@
+### 애플리케이션 공통 설정 및 환경별 프로파일 적용 ###
+
+
+## 스프링 공통 설정
+spring:
+  config:
+    # env 파일 위치 지정
+    import: optional:file:.env[.properties]
+  profiles:
+    # 활성화할 프로파일 지정
+    active:
+      - dev
+  application:
+    name: colabo-works-app
+  main:
+    # 스프링부트 애플리케이션 런타임시 출력되는 배너 끄기
+    banner-mode: off
+  # 브라우저의 새로고침을 통해 변경 이력이 적용될 수 있도록 템플릿 경로와 캐싱값 변경
+  thymeleaf:
+    prefix: file:src/main/resources/templates/
+    suffix: .html
+    cache: false
+  web:
+    resources:
+      # 브라우저의 새로고침을 통해 변경 이력이 적용될 수 있도록 정적 리소스 경로 변경
+      static-locations:
+        - file:src/main/resources/static/
+
+
+## 마이바티스 설정
+mybatis:
+  # 마이바티스 전역 설정 파일 경로 지정
+  config-location: classpath:mybatis/mybatis-config.xml
+  # 매퍼 XML 파일 경로 지정
+  mapper-locations:
+    - classpath:mybatis/mapper/*_mapper.xml
+
+
+## 서버 설정
+server:
+  servlet:
+    # 서블릿 컨테이너 인코딩 설정 - HTTP 요청 및 응답 UTF-8 인코딩 지정
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true

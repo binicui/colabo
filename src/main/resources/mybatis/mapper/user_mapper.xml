@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.subinz.colabo.domain.user.mapper.UserMapper">
+
+    <!-- 이메일 존재 여부 확인 -->
+    <select id="existsByEmail" parameterType="String" resultType="boolean">
+        <![CDATA[
+            SELECT EXISTS (
+                SELECT 1
+                FROM users
+                WHERE email = #{email}
+                    AND deleted_yn = 'N'
+                LIMIT 1
+            )
+        ]]>
+    </select>
+
+    <!-- 닉네임 존재 여부 확인 -->
+    <select id="existsByNickname" parameterType="String" resultType="boolean">
+        <![CDATA[
+            SELECT EXISTS (
+                SELECT 1
+                FROM users
+                WHERE nickname = #{nickname}
+                    AND deleted_yn = 'N'
+                LIMIT 1
+            )
+        ]]>
+    </select>
+
+    <!-- 회원가입 정보 저장 -->
+    <insert id="insertUser" parameterType="SignUpRequest" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO users (
+            email,
+            password,
+            nickname,
+            name,
+            phone,
+            login_type,
+            enabled,
+            updated_at
+        ) VALUES (
+            #{email},
+            #{password},
+            #{nickname},
+            #{name},
+            #{phone},
+            #{loginType},
+            #{enabled},
+            NOW()
+        )
+    </insert>
+
+    <!-- 회원의 권한 등록 -->
+    <insert id="insertUserRole" parameterType="map">
+        INSERT INTO user_roles (
+            user_id,
+            role_type,
+            updated_at
+        ) VALUES (
+            #{userId},
+            #{roleType},
+            NOW()
+        )
+    </insert>
+</mapper>

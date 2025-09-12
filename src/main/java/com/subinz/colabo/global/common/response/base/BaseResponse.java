@@ -5,10 +5,6 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-/**
- * API 응답의 공통 필드들을 정의하는 기본 응답 클래스
- */
-
 @Getter
 public class BaseResponse {
 
